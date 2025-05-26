@@ -1,4 +1,4 @@
-import { LETTER_POOL } from './constant';
+import { LETTER_POOL, SCORE_CHART } from './constant';
 import { cloneObject } from './helpers';
 
 //Implement drawLetters with weighted randomness
@@ -28,17 +28,7 @@ export const drawLetters = () => {
   return selectedLetters;
 };
 
-
-// def uses_available_letters(word, letter_bank):
-//     word = word.upper()
-//     letter_bank_copy = list(letter_bank)
-//     for charset in word:
-//         if charset not in letter_bank_copy:
-//             return False
-//         letter_bank_copy.remove(charset)
-//     return True
-// 
-
+// refactor later to improve time complexity from O(n*m) to O(n+m), using {}
 export const usesAvailableLetters = (input, lettersInHand) => {
   // Implement this method for wave 2
   input = input.toUpperCase();
@@ -55,6 +45,18 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 
 export const scoreWord = (word) => {
   // Implement this method for wave 3
+  if (!word) return 0;
+  
+  word = word.toUpperCase();
+  let totalPoints = 0;
+  
+  if (word.length >=7 && word.length <= 10) {
+    totalPoints += 8;
+  };
+  for (const charset of word) {
+    totalPoints += SCORE_CHART[charset]
+  };
+  return totalPoints
 };
 
 export const highestScoreFrom = (words) => {
