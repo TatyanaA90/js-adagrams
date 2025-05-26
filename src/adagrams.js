@@ -29,8 +29,28 @@ export const drawLetters = () => {
 };
 
 
+// def uses_available_letters(word, letter_bank):
+//     word = word.upper()
+//     letter_bank_copy = list(letter_bank)
+//     for charset in word:
+//         if charset not in letter_bank_copy:
+//             return False
+//         letter_bank_copy.remove(charset)
+//     return True
+// 
+
 export const usesAvailableLetters = (input, lettersInHand) => {
   // Implement this method for wave 2
+  input = input.toUpperCase();
+  const lettersInHandCopy = cloneObject(lettersInHand);
+  for (const charset of input) {
+    const index = lettersInHandCopy.indexOf(charset);
+    if (index === -1) {
+      return false; 
+    }
+    lettersInHandCopy.splice(index, 1);
+  }
+  return true;
 };
 
 export const scoreWord = (word) => {
