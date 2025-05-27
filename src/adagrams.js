@@ -3,7 +3,7 @@ import { cloneObject } from './helpers';
 
 //Implement drawLetters with weighted randomness
 export const drawLetters = () => {
-    // Implement this method for wave 1
+  // Implement this method for wave 1
   const availableLetters = cloneObject(LETTER_POOL);
   const selectedLetters = [];
 
@@ -36,7 +36,7 @@ export const usesAvailableLetters = (input, lettersInHand) => {
   for (const charset of input) {
     const index = lettersInHandCopy.indexOf(charset);
     if (index === -1) {
-      return false; 
+      return false;
     }
     lettersInHandCopy.splice(index, 1);
   }
@@ -46,11 +46,11 @@ export const usesAvailableLetters = (input, lettersInHand) => {
 export const scoreWord = (word) => {
   // Implement this method for wave 3
   if (!word) return 0;
-  
+
   word = word.toUpperCase();
   let totalPoints = 0;
-  
-  if (word.length >=7 && word.length <= 10) {
+
+  if (word.length >= 7 && word.length <= 10) {
     totalPoints += 8;
   };
   for (const charset of word) {
@@ -61,4 +61,39 @@ export const scoreWord = (word) => {
 
 export const highestScoreFrom = (words) => {
   // Implement this method for wave 4
+  let topScore = 0;
+  let tiedWords = [];
+
+
+  for (const word of words) {
+    const score = scoreWord(word);
+
+    if (score > topScore) {
+      topScore = score;
+      tiedWords = [word];
+    } else if (score === topScore) {
+      tiedWords.push(word);
+    }
+  };
+
+
+  let winningWord = tiedWords[0];
+  // 
+  // tiedWords = [ bb, q,  aaaa, aawawaw]
+  for (const word of tiedWords) {
+    if (winningWord.length === 10) {
+        continue;
+    }
+    else if (word.length === 10) {
+      winningWord = word;
+    } 
+    else if (word.length < winningWord.length) { 
+      winningWord = word;
+    }
+  };
+
+  return {
+    word: winningWord,
+    score: topScore
+  };
 };
