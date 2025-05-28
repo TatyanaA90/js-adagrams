@@ -61,7 +61,7 @@ export const scoreWord = (word) => {
   word = word.toUpperCase();
   let totalPoints = 0;
 
-  if (word.length >= 7 && word.length <= 10) {
+  if (word.length >= 7) {
     totalPoints += 8;
   };
   for (const charset of word) {
