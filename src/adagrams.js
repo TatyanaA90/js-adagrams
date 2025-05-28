@@ -28,20 +28,31 @@ export const drawLetters = () => {
   return selectedLetters;
 };
 
-// refactor later to improve time complexity from O(n*m) to O(n+m), using {}
+
 export const usesAvailableLetters = (input, lettersInHand) => {
   // Implement this method for wave 2
+  const letterCount = {};
   input = input.toUpperCase();
-  const lettersInHandCopy = cloneObject(lettersInHand);
+
+  for (const letter of lettersInHand) {
+    if (letterCount[letter]) {
+      letterCount[letter] += 1;
+    } else {
+      letterCount[letter] = 1;
+    }
+  }
+
   for (const charset of input) {
-    const index = lettersInHandCopy.indexOf(charset);
-    if (index === -1) {
+    if (letterCount[charset]) {
+      letterCount[charset] -= 1;
+    } else {
       return false;
     }
-    lettersInHandCopy.splice(index, 1);
   }
+
   return true;
 };
+
 
 export const scoreWord = (word) => {
   // Implement this method for wave 3
@@ -78,16 +89,15 @@ export const highestScoreFrom = (words) => {
 
 
   let winningWord = tiedWords[0];
-  // 
-  // tiedWords = [ bb, q,  aaaa, aawawaw]
+
   for (const word of tiedWords) {
     if (winningWord.length === 10) {
-        continue;
+      continue;
     }
     else if (word.length === 10) {
       winningWord = word;
-    } 
-    else if (word.length < winningWord.length) { 
+    }
+    else if (word.length < winningWord.length) {
       winningWord = word;
     }
   };
